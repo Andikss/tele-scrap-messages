@@ -28,7 +28,6 @@ client.on('photo', async (ctx) => {
     }
 });
 
-// Command handler untuk perintah /get
 client.command('get', async (ctx) => {
     try {
         const commandParts = ctx.message.text.split(' ');
@@ -61,6 +60,12 @@ client.command('get', async (ctx) => {
                 // Ambil data dari database berdasarkan provinsi dan tanggal
                 const data = await fetchDatabase(null, province, date);
 
+                // Check if data is null or empty
+                if (!data || data.length === 0) {
+                    ctx.reply('Data tidak ditemukan.');
+                    return;
+                }
+
                 // Format dan kirim respons ke user
                 data.forEach(item => {
                     const response = `
@@ -82,6 +87,12 @@ ${item.createdAt}
                 const group = ctx.message.text;
                 // Ambil data dari database berdasarkan grup dan tanggal
                 const data = await fetchDatabase(group, null, date);
+
+                // Check if data is null or empty
+                if (!data || data.length === 0) {
+                    ctx.reply('Data tidak ditemukan.');
+                    return;
+                }
 
                 // Format dan kirim respons ke user
                 data.forEach(item => {

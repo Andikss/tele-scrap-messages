@@ -72,7 +72,7 @@ export const fetchDatabase = async (group, province, date) => {
         const [rows] = await connection.execute(query, queryParams);
 
         if (rows.length === 0) {
-            return 'No data found in the database';
+            return null;
         }
 
         return rows; 
